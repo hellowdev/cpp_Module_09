@@ -1,10 +1,7 @@
 #include <iostream>
 
-int main()
+int main(int ac, char *arg[])
 {
-    const vec vec1;
-    int b = 5;
-    vec1.test(b);
-    // vec1.x = 5;
+    if ()
     
 }
