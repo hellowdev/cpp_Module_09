@@ -1,10 +1,10 @@
 CXX = c++
 
-NAME = myprog
+NAME = btc
 
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRC = main.cpp
+SRC = main.cpp  BitcoinExchange.cpp
 
 OBJ = ${SRC:.cpp=.o}
 
@@ -13,7 +13,7 @@ all: $(NAME)
 $(NAME) : $(OBJ)
 	@$(CXX) $(CXXFLAGS) $(OBJ) -o $(NAME)
 	
-%.o : %.cpp  easyfind.hpp
+%.o : %.cpp BitcoinExchange.hpp
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean :
