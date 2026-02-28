@@ -7,13 +7,13 @@
 class RPN
 {
     private:
-        std::stack<int> stk;
+        std::stack<int> stack;
         std::string arg;
-    public:
         RPN();
+        RPN& operator=(const RPN& obj);
+        RPN(const RPN& obj);
+    public:
         RPN(std::string setarg);
-        // RPN& operator=(const RPN& obj);
-        // RPN(const RPN& obj);
         void parse_str();
         ~RPN();
 };

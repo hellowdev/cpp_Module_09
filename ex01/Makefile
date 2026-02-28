@@ -2,7 +2,7 @@ CXX = c++
 
 NAME = RPN
 
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -fsanitize=address -std=c++98
 
 SRC = main.cpp  RPN.cpp
 
