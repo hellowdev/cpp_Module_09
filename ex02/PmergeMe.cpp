@@ -58,12 +58,12 @@ void PmergeMe::pairing(std::vector<std::pair<int, int>>& newPairs, std::vector<s
 	{
 		if (oldPairs[i].first > oldPairs[i + 1].first)
         {
-            newPairs.push_back(std::make_pair(oldPairs[i].first, oldPairs[i + 1].second));
+            newPairs.push_back(std::make_pair(oldPairs[i].first, oldPairs[i + 1].first));
             // winners[j] = oldPairs[i];
         }
         else
         {
-            newPairs.push_back(std::make_pair(oldPairs[i + 1].first, oldPairs[i].second));
+            newPairs.push_back(std::make_pair(oldPairs[i + 1].first, oldPairs[i].first));
             // winners[j] = seq[i + 1];
         }
 	}
@@ -84,23 +84,22 @@ std::vector<std::pair<int, int>> PmergeMe::fordJohnsonVec(std::vector<std::pair<
 	if (oldPairs.size() == 1)
 		return oldPairs;
 
-	// odd = pairs.size() % 2;
-	// int stragler = 0;
-    // bool hasStragler = false;
-	// if (odd)
-    // {
-	// 	stragler = pairs.back();
-    //     pairs.pop_back();
-    //     hasStragler = true;
-    // }
+	odd = oldPairs.size() % 2;
+	std::pair<int, int> stragler;
+    bool hasStragler = false;
+	if (odd)
+    {
+		stragler = oldPairs.back();
+        oldPairs.pop_back();
+        hasStragler = true;
+    }
     std::vector<std::pair<int, int>> newPairs;
-    
 	pairing(newPairs, oldPairs);// pairing and grouping
 	// group(pairs, winners);
 	fordJohnsonVec(newPairs);
 	std::vector<int> mainChain;
 	
-	return pairs;
+	return oldPairs;
 }
 
 void PmergeMe::sort()
