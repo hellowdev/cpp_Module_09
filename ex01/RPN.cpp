@@ -10,6 +10,13 @@ int is_oper(char check)
 	return 0;
 	
 }
+
+int iswspace(char c)
+{
+	if (c == 32 || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r')
+		return 1;
+	return 0;
+}
 void RPN::parse_str()
 {
 	unsigned int nb = 0;
@@ -19,7 +26,7 @@ void RPN::parse_str()
 		throw std::logic_error("Error");
 	std::stringstream parse(arg);
 	size_t i = 0;
-	while (i < arg.size()) 
+	while (i < arg.size())
 	{
 		if (is_oper(arg[i]) && stack.size() < 2)
 			throw std::logic_error("Error");
@@ -49,6 +56,8 @@ void RPN::parse_str()
 			}
 			parse >> operation;
 		}
+		if (!iswspace(arg[i]) && (arg[i + 1] && !iswspace(arg[i + 1])))
+			throw std::logic_error("Error Space");
 		i++;
 	}
 	if (stack.size() != 1)

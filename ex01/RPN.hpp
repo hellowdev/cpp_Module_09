@@ -9,8 +9,8 @@ class RPN
     private:
         std::stack<int> stack;
         std::string arg;
-        RPN();
         RPN& operator=(const RPN& obj);
+        RPN();
         RPN(const RPN& obj);
     public:
         RPN(std::string setarg);

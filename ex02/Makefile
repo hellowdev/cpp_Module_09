@@ -1,10 +1,10 @@
 CXX = c++
 
-NAME = RPN
+NAME = PmergeMe
 
 CXXFLAGS = -Wall -Wextra -Werror -fsanitize=address -std=c++98
 
-SRC = main.cpp  RPN.cpp
+SRC = main.cpp  PmergeMe.cpp
 
 OBJ = ${SRC:.cpp=.o}
 
@@ -13,7 +13,7 @@ all: $(NAME)
 $(NAME) : $(OBJ)
 	@$(CXX) $(CXXFLAGS) $(OBJ) -o $(NAME)
 	
-%.o : %.cpp RPN.hpp
+%.o : %.cpp PmergeMe.hpp
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean :
