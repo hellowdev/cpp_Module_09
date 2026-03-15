@@ -40,16 +40,6 @@ void PmergeMe::printVec(std::vector<int> vect)
 }
 
 
-// void PmergeMe::group(std::vector<int> sequance, std::vector<int>& bigs, std::vector<int>& smalls)
-// {
-// 	size_t size = sequance.size();
-	
-// 	for (size_t i = 0; i < size; i++)
-// 	{
-		
-// 	}
-// }
-
 void PmergeMe::pairing(std::vector<Element>& winners, std::vector<Element> elements) // 
 {
 	size_t size = elements.size();
@@ -106,8 +96,9 @@ void PmergeMe::sort()
         hasStragler = true;
     }
 	
-	fordJohnsonVec(vec);
-	std::vector<int> mainChain;
+	std::vector<Element> mainChain;
+	mainChain = fordJohnsonVec(vec);
+	std::vector<Element> pend;
 }
 
 PmergeMe::~PmergeMe(){}

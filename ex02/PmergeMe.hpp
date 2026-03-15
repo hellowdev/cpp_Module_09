@@ -24,7 +24,6 @@ private:
 	void TrimStr(std::string& str);
 
 	void pairing(std::vector<Element>& winners, std::vector<Element> oldPairs);
-	// void group(std::vector<int> vect, std::vector<int>& winners);
 	//****************** ORTHODOX ******************//
 	PmergeMe();
 	PmergeMe(const PmergeMe& old);
