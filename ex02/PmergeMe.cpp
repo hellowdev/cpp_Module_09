@@ -2,10 +2,12 @@
 
 PmergeMe::PmergeMe(char **av)
 {
+	Element elemtents;
 	for (int i = 1; av[i]; i++)
 	{
 		unsigned int nb = parseNumber(av[i]);
-		vec.push_back(nb);
+		elemtents = {nb};
+		vec.push_back(elemtents);
 	}
 }
 
@@ -25,7 +27,7 @@ unsigned int PmergeMe::parseNumber(std::string in)
 	TrimStr(in); // remove spaces from begin and end of string
 	char *end = NULL;
 	long number = std::strtol(in.c_str(), &end, 10);
-	if (*end || errno == ERANGE || number < 0 || number > INT_MAX)
+	if (*end || errno == ERANGE || number < 0 || number > INT32_MAX)
 		throw std::runtime_error("Error: invalid input.");
 	return number;
 }
@@ -69,52 +71,24 @@ void PmergeMe::pairing(std::vector<std::pair<int, int>>& newPairs, std::vector<s
 	}
 }
 
-std::vector<std::pair<int, int>> PmergeMe::fordJohnsonVec(std::vector<std::pair<int, int>> oldPairs)
-{
-	if (oldPairs.size() == 1)
-		return oldPairs;
-
-	odd = oldPairs.size() % 2;
-	std::pair<int, int> stragler;
-    bool hasStragler = false;
-	if (odd)
-    {
-		stragler = oldPairs.back();
-        oldPairs.pop_back();
-        hasStragler = true;
-    }
-    std::vector<std::pair<int, int>> newPairs;
-	pairing(newPairs, oldPairs);// pairing and grouping
-	// group(pairs, winners);
-	fordJohnsonVec(newPairs);
-	std::vector<int> mainChain;
-	
-	return oldPairs;
-}
 
 void PmergeMe::sort()
 {
     if (vec.size() == 1)
 		return ;
-	Element pairs;
+	
 	odd = vec.size() % 2;
-	int stragler = 0;
-    bool hasStragler = false;
+	Element stragler;
+  	bool hasStragler = false;
 	if (odd)
     {
 		stragler = vec.back();
         vec.pop_back();
         hasStragler = true;
     }
-	// std::vector<int> winners;
-	// pairing(vec, winners); // pairing and grouping
-    std::vector<std::pair<int, int>> pairs;
-    firstPairs(vec, pairs);
-	// group(vec, winners);
-	fordJohnsonVec(pairs);
+	
+	fordJohnsonVec(vec);
 	std::vector<int> mainChain;
-
-	fordJohnsonVec(pairs);
 }
 
 PmergeMe::~PmergeMe(){}

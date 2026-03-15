@@ -7,24 +7,24 @@
 
 struct Element
 {
-	int value;
+	unsigned int value;
 	std::vector<Element> chain;
 };
 
 class PmergeMe
 {
 private:
-	std::vector<int> vec;
+	// std::vector<int> vec;
+	std::vector<Element> vec;
 	int odd;
 
 	//********************* ALGO *********************//
-	std::vector<std::pair<int, int>> fordJohnsonVec(std::vector<std::pair<int, int>> inp);
+	std::vector<Element> fordJohnsonVec(std::vector<Element> pairs);
 	unsigned int parseNumber(std::string in);
 	void TrimStr(std::string& str);
 
-	void pairing(std::vector<std::pair<int, int>>& newPairs, std::vector<std::pair<int, int>> oldPairs);
+	void pairing(std::vector<Element> winners);
 	// void group(std::vector<int> vect, std::vector<int>& winners);
-    void firstPairs(std::vector<int> seq, std::vector<std::pair<int, int>>& fPairs);
 	//****************** ORTHODOX ******************//
 	PmergeMe();
 	PmergeMe(const PmergeMe& old);
