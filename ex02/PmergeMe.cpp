@@ -6,7 +6,7 @@ PmergeMe::PmergeMe(char **av)
 	for (int i = 1; av[i]; i++)
 	{
 		unsigned int nb = parseNumber(av[i]);
-		elemtents = {nb};
+		elemtents = {nb}; // initlize our vector of struct element with vl and empty chain
 		vec.push_back(elemtents);
 	}
 }
@@ -50,27 +50,46 @@ void PmergeMe::printVec(std::vector<int> vect)
 // 	}
 // }
 
-void PmergeMe::pairing(std::vector<std::pair<int, int>>& newPairs, std::vector<std::pair<int, int>> oldPairs) // WHY REF??
+void PmergeMe::pairing(std::vector<Element>& winners, std::vector<Element> elements) // 
 {
-    
-    
-	size_t size = oldPairs.size();
-	// int j = 0;
+	size_t size = elements.size();
 	for (size_t i = 0; i < size; i += 2)
 	{
-		if (oldPairs[i].first > oldPairs[i + 1].first)
-        {
-            newPairs.push_back(std::make_pair(oldPairs[i].first, oldPairs[i + 1].first));
-            // winners[j] = oldPairs[i];
-        }
-        else
-        {
-            newPairs.push_back(std::make_pair(oldPairs[i + 1].first, oldPairs[i].first));
-            // winners[j] = seq[i + 1];
-        }
+		if (elements[i].value > elements[i + 1].value)
+		{
+			elements[i].chain.push_back(elements[i + 1]);
+			winners.push_back(elements[i]);
+		}
+		else	
+		{
+			elements[i + 1].chain.push_back(elements[i]);
+			winners.push_back(elements[i + 1]);
+		}
 	}
 }
 
+std::vector<Element> PmergeMe::fordJohnsonVec(std::vector<Element> elements)
+{
+	if (elements.size() == 1)
+		return elements;
+
+	odd = elements.size() % 2;
+	Element stragler;
+    bool hasStragler = false;
+	if (odd)
+    {
+		stragler = elements.back();
+        elements.pop_back();
+        hasStragler = true;
+    }
+    std::vector<Element> winners;
+	pairing(winners, elements); // Each winner now carries its loser in its chain!
+	std::vector<Element> mainChain;
+	mainChain = fordJohnsonVec(winners);
+	std::vector<Element> pend;
+
+	return winners;
+}
 
 void PmergeMe::sort()
 {

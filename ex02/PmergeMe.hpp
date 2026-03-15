@@ -19,11 +19,11 @@ private:
 	int odd;
 
 	//********************* ALGO *********************//
-	std::vector<Element> fordJohnsonVec(std::vector<Element> pairs);
+	std::vector<Element> fordJohnsonVec(std::vector<Element> elements);
 	unsigned int parseNumber(std::string in);
 	void TrimStr(std::string& str);
 
-	void pairing(std::vector<Element> winners);
+	void pairing(std::vector<Element>& winners, std::vector<Element> oldPairs);
 	// void group(std::vector<int> vect, std::vector<int>& winners);
 	//****************** ORTHODOX ******************//
 	PmergeMe();
