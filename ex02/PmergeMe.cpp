@@ -68,17 +68,7 @@ void PmergeMe::pairing(std::vector<std::pair<int, int>>& newPairs, std::vector<s
         }
 	}
 }
-void PmergeMe::firstPairs(std::vector<int> seq, std::vector<std::pair<int, int>>& pairs)
-{
-    size_t size = seq.size();
-	for (size_t i = 0; i < size; i += 2)
-	{
-		if (seq[i] > seq[i + 1])
-            pairs.push_back(std::make_pair(seq[i], seq[i + 1])); // vector [pairs(winner, loser), so on..]
-        else
-            pairs.push_back(std::make_pair(seq[i + 1], seq[i])); // vector [pairs(winner, loser), so on..]
-	}
-}
+
 std::vector<std::pair<int, int>> PmergeMe::fordJohnsonVec(std::vector<std::pair<int, int>> oldPairs)
 {
 	if (oldPairs.size() == 1)
@@ -106,7 +96,7 @@ void PmergeMe::sort()
 {
     if (vec.size() == 1)
 		return ;
-
+	Element pairs;
 	odd = vec.size() % 2;
 	int stragler = 0;
     bool hasStragler = false;

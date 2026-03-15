@@ -5,6 +5,12 @@
 #include <sstream>
 #include <cctype>
 
+struct Element
+{
+	int value;
+	std::vector<Element> chain;
+};
+
 class PmergeMe
 {
 private:
