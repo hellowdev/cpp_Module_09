@@ -31,16 +31,11 @@ std::vector<int> PmergeMe::generatejacobOrder(size_t pendSize)
 	{
 		for(int n = jacobSeq[i]; n > previous[i]; n--)
 			fillOrder.push_back(n - 1); // For n = 3 (prev = 1): insert b3, b2 → 2 elements
-		// n - 1 bash nakhd ra9m b index 
 	}
 	
 	
 	//************************ LEFT IN REVERSE ************************//
-	for (size_t end = pendSize; jacob(j) <= end ; end--) // check if leftover
+	for (size_t end = pendSize; end > jacob(j - 1); end--) // check if leftover
 		fillOrder.push_back(end - 1);
-		// end - 1 bash nakhd ra9m b index 
-
-
-	
 	return fillOrder;
 }
