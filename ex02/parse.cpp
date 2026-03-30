@@ -11,23 +11,27 @@ PmergeMe::PmergeMe(char **av)
 	}
 }
 
-void PmergeMe::TrimStr(std::string& str)
+void PmergeMe::parse_str(std::string& str)
 {
+	unsigned int nb;
+	std::stringstream checkstr(str);
 	size_t start = str.find_first_not_of(" \t\n\r\f\v");
 	if (start == std::string::npos)
 		throw std::runtime_error("Error: invalid input.");
-	size_t end = str.find_last_not_of(" \t\n\r\f\v");
-	str = str.substr(start, end - start + 1);
+	checkstr >> nb;
+	if ((checkstr >> nb))
+		throw std::runtime_error("Error: invalid input.");
+
 }
 
 unsigned int PmergeMe::parseNumber(std::string in)
 {
-	if (in.empty() || in.find("0123456789 \t\r\v\n") != in.npos)
+	if (in.find_first_not_of("0123456789 \t\r\v\n") != std::string::npos)
 		throw std::runtime_error("Error: invalid input.");
-	TrimStr(in); // remove spaces from begin and end of string
+	parse_str(in);
 	char *end = NULL;
 	long number = std::strtol(in.c_str(), &end, 10);
-	if (*end || errno == ERANGE || number < 0 || number > __INT_MAX__)
+	if (errno == ERANGE || number < 0 || number > __INT_MAX__)
 		throw std::runtime_error("Error: invalid input.");
 	return number;
 }

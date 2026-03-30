@@ -6,6 +6,8 @@
 #include <cctype>
 #include <cstdlib>
 #include <cerrno>
+#include <iomanip>
+#include <ctime>
 
 struct Element
 {
@@ -21,20 +23,20 @@ class PmergeMe
 		void printVec(std::vector<int> vect);
 		//******************** PARSE ********************//
 		unsigned int parseNumber(std::string in);
-		void TrimStr(std::string& str);
+		void parse_str(std::string& str);
 		//********************* ALGO *********************//
 		std::vector<Element> fordJohnsonVec(std::vector<Element> elements);
 		void pairing(std::vector<Element>& winners, std::vector<Element> oldPairs);
 		std::vector<int> generatejacobOrder(size_t pendSize);
 		size_t jacob(size_t nb);
 		void BinaryInsertionSearch(std::vector<int> jacobOrder, std::vector<Element> pend, std::vector<Element>& mainChain);
-		int insertloser(Element, std::vector<Element>&, int, int);
+		void insertloser(Element, std::vector<Element>&, int, int);
 		//****************** ORTHODOX ******************//
 		PmergeMe();
 		PmergeMe(const PmergeMe& old);
 		PmergeMe& operator=(const PmergeMe& old);
 	public:
 		PmergeMe(char **av);
-		void sort();
+		std::vector<Element> sort();
 		~PmergeMe();
 };

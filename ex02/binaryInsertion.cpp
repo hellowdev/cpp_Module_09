@@ -2,19 +2,20 @@
 
 //******************************************************************************************* */
 
-int PmergeMe::insertloser(Element loser, std::vector<Element>& mainChain, int start, int end)
+void PmergeMe::insertloser(Element loser, std::vector<Element>& mainChain, int start, int end)
 {
 	int range = end - start;
 	if (range == 0)
     {
         mainChain.insert(mainChain.begin() + start, loser);
-        return start;
+        return ;
     }
     int mid = range / 2;
 
     if (loser.value < mainChain[mid + start].value)
-        return insertloser(loser, mainChain, start, mid + start);
-    return insertloser(loser, mainChain, mid + start + 1, end);
+        insertloser(loser, mainChain, start, mid + start);
+	else
+    	insertloser(loser, mainChain, mid + start + 1, end);
 }
 
 void PmergeMe::BinaryInsertionSearch(std::vector<int> jacobOrder, std::vector<Element> pend, std::vector<Element>& mainChain)
@@ -31,12 +32,9 @@ void PmergeMe::BinaryInsertionSearch(std::vector<int> jacobOrder, std::vector<El
 	}
 	for (size_t i = 0; i < orderedPend.size(); i++)
 	{
-		int insertPos = insertloser(orderedPend[i], mainChain, 0, winPos[i]);
+		insertloser(orderedPend[i], mainChain, 0, winPos[i]);
 		for (size_t j = 0; j < winPos.size(); j++)
-		{
-			if (winPos[j] >= insertPos)
-				winPos[j]++;
-		}
+			winPos[j]++;
 	}
 }
 

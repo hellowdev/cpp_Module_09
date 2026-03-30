@@ -1,14 +1,4 @@
 #include "PmergeMe.hpp"
-
-int lvl = 0;
-
-void pree(std::vector<Element> vec)
-{
-    for (size_t i = 0; i < vec.size(); i++)
-        std::cout << vec[i].value << " ";
-    std::cout << std::endl;
-}
-
 void PmergeMe::pairing(std::vector<Element>& winners, std::vector<Element> elements) // 
 {
     size_t size = elements.size();
@@ -29,10 +19,8 @@ void PmergeMe::pairing(std::vector<Element>& winners, std::vector<Element> eleme
 
 std::vector<Element> PmergeMe::fordJohnsonVec(std::vector<Element> elements)
 {
-    lvl++;
-    std::cout << "------------level[" << lvl << "]--------------\n";
     if (elements.size() == 1) // BASE CASE
-        return std::cout << "BASE CASE!\n", elements;
+        return elements;
 
     Element stragler;
     bool hasStragler = false;
@@ -42,43 +30,23 @@ std::vector<Element> PmergeMe::fordJohnsonVec(std::vector<Element> elements)
         stragler = elements.back();
         elements.pop_back();
     }
-
     std::vector<Element> winners;
     pairing(winners, elements); // Each winner now carries its loser in its chain!
-    std::cout << "winn: "; pree(winners);
-    std::cout << "pend: ";
-    for (size_t i = 0; i < winners.size(); i++)
-    {
-        std::cout << winners[i].losers.back().value << " ";
-    }
-    std::cout << "\n";
-    
     std::vector<Element> mainChain = fordJohnsonVec(winners);
-    
     /*---------UNWIDING RECURSION----------*/
-    lvl--;
-    std::cout << "------------level[" << lvl << "]--------------\nsortedwinn: "; pree(mainChain);
     std::vector<Element> pend;
     for (size_t i = 0; i < mainChain.size(); i++) // loop thrgout mainChain and rm last loser of each one and add them to the pends
     {
         pend.push_back(mainChain[i].losers.back());
         mainChain[i].losers.pop_back();
     }
-    // std::cout << "level: " << lvl << " pend: "; pree(pend);
-
-    std::cout << "INSERT FISRT LOSER: [" << pend[0].value << "]\n";
     mainChain.insert(mainChain.begin(), pend[0]); // FIRST INSERT in MainChain
-
     std::vector<int> jacobOrder = generatejacobOrder(pend.size());
-    printVec(jacobOrder);
 
      // if pend has jst two element no need to do jacoborder, jst insert the remaining element
      // the first element in inserted before as first loser 
     if (jacobOrder.empty() && pend.size() == 2)
         insertloser(pend[1], mainChain, 0, mainChain.size());
-
-    
-    
     BinaryInsertionSearch(jacobOrder, pend, mainChain);
     //insrt stragler
     if (hasStragler)
@@ -86,12 +54,14 @@ std::vector<Element> PmergeMe::fordJohnsonVec(std::vector<Element> elements)
     return mainChain;
 }
 
-void PmergeMe::sort()
+std::vector<Element> PmergeMe::sort()
 {    
     if (vec.size() == 1)
-        return ; // hna khas tprinti one elem
+        return vec;
     std::vector<Element> sorted = fordJohnsonVec(vec);
-    std::cout << ">>>>>>>>>>>> FINAL RESULT: ";pree(sorted);
+    // std::cout << ">>>>>>>>>>>> FINAL RESULT: ";
+    return sorted;
+
 }
 
 PmergeMe::~PmergeMe(){}
