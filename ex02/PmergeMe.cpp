@@ -32,25 +32,37 @@ std::vector<Element> PmergeMe::fordJohnsonVec(std::vector<Element> elements)
     }
     std::vector<Element> winners;
     pairing(winners, elements); // Each winner now carries its loser in its chain!
+
     std::vector<Element> mainChain = fordJohnsonVec(winners);
     /*---------UNWIDING RECURSION----------*/
+ // EXTRACT LOSERS FROM MAINCHAIN AND ADD THEM TO THE PEND
     std::vector<Element> pend;
     for (size_t i = 0; i < mainChain.size(); i++) // loop thrgout mainChain and rm last loser of each one and add them to the pends
     {
         pend.push_back(mainChain[i].losers.back());
         mainChain[i].losers.pop_back();
     }
-    mainChain.insert(mainChain.begin(), pend[0]); // FIRST INSERT in MainChain
+//  INSERT FIRST PEND ELEMENT
+    mainChain.insert(mainChain.begin(), pend[0]);
+/* INSERT REMAINING WITH JACOBSTHAL */
     std::vector<int> jacobOrder = generatejacobOrder(pend.size());
 
      // if pend has jst two element no need to do jacoborder, jst insert the remaining element
      // the first element in inserted before as first loser 
-    if (jacobOrder.empty() && pend.size() == 2)
+    if (pend.size() == 2)
         insertloser(pend[1], mainChain, 0, mainChain.size());
-    BinaryInsertionSearch(jacobOrder, pend, mainChain);
+    else
+        BinaryInsertionSearch(jacobOrder, pend, mainChain);
     //insrt stragler
     if (hasStragler)
+    {
+        std::cout << "sorted mainChain: ";
+		for (size_t i = 0; i < mainChain.size(); i++)
+			std::cout << mainChain[i].value << " ";
         insertloser(stragler, mainChain, 0, mainChain.size());
+        std::cout << "\n";
+        std::cout << "insert this stragler: " << stragler.value << "\n";
+    }
     return mainChain;
 }
 

@@ -8,7 +8,7 @@
 #include <cerrno>
 #include <iomanip>
 #include <ctime>
-
+#include <unistd.h>
 struct Element
 {
 	unsigned int value;
