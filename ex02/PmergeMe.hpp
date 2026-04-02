@@ -18,7 +18,7 @@ struct ElementVec
 struct ElementDeq
 {
 	unsigned int value;
-	std::vector<ElementDeq> losers;
+	std::deque<ElementDeq> losers;
 };
 
 class PmergeMe
