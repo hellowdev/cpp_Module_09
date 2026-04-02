@@ -21,7 +21,7 @@ void RPN::parse_str()
 {
 	unsigned int nb = 0;
 	char operation = '\0';
-	if (arg.empty() || arg.find_first_not_of(" \t\n\v\f\r") == std::string::npos 
+	if (arg.empty() || arg.find_first_not_of(" \t\n\v\f\r") == std::string::npos
 	|| arg.find_first_not_of("0123456789-+/* \t\n\v\f\r") != std::string::npos) 
 		throw std::logic_error("Error");
 	std::stringstream parse(arg);
@@ -38,14 +38,14 @@ void RPN::parse_str()
 		}
 		if (stack.size() >= 2 && is_oper(arg[i]))
 		{
-			int valone = stack.top(); // 8 9 + == 
+			int valone = stack.top(); // 7
 			stack.pop();
-			int valtwo = stack.top();
+			int valtwo = stack.top(); // 1
 			stack.pop();
 			if (arg[i] == '-')
 				stack.push(valtwo - valone);
 			else if (arg[i] == '+')
-				stack.push(valtwo + valone);
+				stack.push(valtwo + valone); // 5 + 2 = 7
 			else if (arg[i] == '*')
 				stack.push(valtwo * valone);
 			else if (arg[i] == '/')
@@ -56,7 +56,7 @@ void RPN::parse_str()
 			}
 			parse >> operation;
 		}
-		if (!iswspace(arg[i]) && (arg[i + 1] && !iswspace(arg[i + 1])))
+		if (!iswspace(arg[i]) && (arg[i + 1] && !iswspace(arg[i + 1]))) // at least one space between them
 			throw std::logic_error("Error Space");
 		i++;
 	}

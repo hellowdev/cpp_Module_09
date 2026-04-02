@@ -33,7 +33,6 @@ void BitcoinExchange::storing_db(std::ifstream& data_base)
         double value = atof(line.substr(idx + 1).c_str());
         map[line.substr(0, idx)] = value; // from 0 to ',' then ',' to end
     }
-    // print_data();
 }
 // ****************/------------/***************/
 
@@ -42,15 +41,14 @@ void BitcoinExchange::calculate_btc()
 {
     std::map<std::string, double>::iterator it;
     
-    it = map.lower_bound(inpDate); // pointing on map["data"] >= inpData    
+    it = map.lower_bound(inpDate); // pointing on map["data"] >= inpData
     if ((it == map.end() || it != map.begin()) && !map.count(inpDate))
         it--;
-    else if (!map.count(inpDate))
+    else if (!map.count(inpDate) && it == map.begin())
        throw std::invalid_argument("date not found => " + inpDate);
     std::cout << inpDate << " => " << inpValue << " = "<< it->second * inpValue << '\n';
-
-
 }
+
 bool isLeapYear(int year) 
 {
     return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
@@ -89,7 +87,7 @@ void BitcoinExchange::parse_lines(std::istringstream& parse, std::string& line)
         throw std::invalid_argument("Error: bad input => " + inpDate);
     parse.seekg(0);
     parse >> year >> fmin >> month >> smin >> day >> pipe;
-    if (pipe != '|' || year < 1 || year > 9999 || fmin != '-' || smin != '-' 
+    if (pipe != '|' || year < 1900 || year > 3000 || fmin != '-' || smin != '-' 
     || month < 1 || month > 12 || day < 1 || !check_month(year, month, day))
         throw std::invalid_argument("Error: bad input => " + inpDate);
 
